@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intolerante a Lactose - Menu</title>
+    <!-- Importando fontes para chegar o mais próximo possível da imagem -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Playfair+Display:ital,wght@0,900;1,900&family=Montserrat:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        /* Estilos Gerais */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        /* Container do Cardápio */
+        .menu-container {
+            background-color: #e8d1a7; /* Tom bege igual ao cardapio.html */
+            width: 100%;
+            max-width: 1000px;
+            min-height: 700px;
+            padding: 50px;
+            border: 2px dashed #a13c32; /* Borda tracejada vermelha igual */
+            position: relative;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+        }
+
+        /* O ponto vermelho no topo da borda */
+        .menu-container::after {
+            content: '';
+            position: absolute;
+            top: -6px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 12px;
+            height: 12px;
+            background-color: #ff4d4d;
+            border-radius: 50%;
+        }
+
+        /* Botão de Voltar */
+        .back-button {
+            position: absolute;
+            top: 25px;
+            left: 25px;
+            width: 45px;
+            height: 45px;
+            background-color: #3d1a0b; /* Marrom escuro */
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            text-decoration: none;
+        }
+
+        .back-button svg {
+            width: 20px;
+            height: 20px;
+            fill: none;
+            stroke: #e8d1a7;
+            stroke-width: 3;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        /* Título Principal */
+        .header {
+            text-align: center;
+            margin-bottom: 0;
+            display: none;
+        }
+
+        .header h1 {
+            font-size: 72px;
+        }
+
+        /* Grid de Conteúdo */
+        .menu-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            margin-top: 20px;
+        }
+
+        /* Seções de Bebidas */
+        .menu-section h2 {
+            font-family: 'Cinzel', serif; /* Fonte clássica e decorativa */
+            font-size: 72px;
+            color: #3d1a0b;
+            margin-bottom: 40px;
+            letter-spacing: -2px;
+            line-height: 1;
+        }
+
+        /* Estilo da Lista */
+        @font-face {
+            font-family: 'TAN-NIMBUS';
+            src: url('fontes/TAN-NIMBUS.woff2') format('woff2'),
+                 url('fontes/TAN-NIMBUS.woff') format('woff'),
+                 url('fontes/TAN-NIMBUS.otf') format('opentype');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        .menu-items {
+            list-style: none;
+        }
+
+        /* Item do Menu */
+        .menu-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 12px;
+            color: #3d1a0b;
+            text-decoration: none;
+            transition: transform 0.2s ease;
+        }
+
+        .menu-item:hover {
+            transform: scale(1.02);
+        }
+
+        .item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            width: 100%;
+            margin-bottom: 0;
+        }
+
+        .item-name {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 24px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            flex: 1;
+        }
+
+        .item-price {
+            font-family: 'TAN-NIMBUS', serif;
+            font-size: 32px;
+            font-weight: 900;
+            margin-left: 20px;
+            white-space: nowrap;
+        }
+
+        .item-description {
+            display: none;
+        }
+
+        /* Gato Decorativo (Espaço Reservado) */
+        .cat-container {
+            display: none;
+        }
+
+        /* Responsividade */
+        @media (max-width: 900px) {
+            .menu-grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+            .menu-section h2 {
+                font-size: 56px;
+                text-align: center;
+            }
+            .menu-container {
+                padding: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Container Principal do Menu -->
+    <div class="menu-container">
+        
+        <!-- Botão de Voltar -->
+        <div class="back-button">
+            <svg viewBox="0 0 24 24">
+                <path d="M15 18l-6-6 6-6" />
+            </svg>
+        </div>
+
+        <!-- Conteúdo do Menu -->
+        <div class="menu-grid">
+            
+            <!-- Coluna de Bebidas Geladas -->
+            <section class="menu-section">
+                <h2>Bebidas geladas</h2>
+                <ul class="menu-items">
+                    <li class="menu-item">
+                        <span class="item-name">Iced Latte de Aveia</span>
+                        <span class="item-price">15,90</span>
+                    </li>
+                    <li class="menu-item">
+                        <span class="item-name">Limonada Suíça com Coco</span>
+                        <span class="item-price">15,00</span>
+                    </li>
+                    <li class="menu-item">
+                        <span class="item-name">Frappé de Morango com Amêndoas</span>
+                        <span class="item-price">17,90</span>
+                    </li>
+                </ul>
+            </section>
+
+            <!-- Coluna de Bebidas Quentes -->
+            <section class="menu-section">
+                <h2>Bebidas quentes</h2>
+                <ul class="menu-items">
+                    <li class="menu-item">
+                        <span class="item-name">Cappuccino de Castanhas</span>
+                        <span class="item-price">12,00</span>
+                    </li>
+                    <li class="menu-item">
+                        <span class="item-name">Chocolate Quente Vegano</span>
+                        <span class="item-price">22,00</span>
+                    </li>
+                    <li class="menu-item">
+                        <span class="item-name">Golden Milk (Leite Dourado)</span>
+                        <span class="item-price">15,00</span>
+                    </li>
+                </ul>
+            </section>
+        </div>
+
+    </div>
+
+</body>
+</html>
