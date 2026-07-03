@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intolerante a Lactose - Menu</title>
+    <!-- Importando a fonte Cinzel Decorative do Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        /* Definindo a fonte TAN-NIMBUS localmente */
+        @font-face {
+            font-family: 'TAN-NIMBUS';
+            src: url('fontes/TAN-NIMBUS.otf') format('opentype');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        /* Variáveis de Cores */
+        :root {
+            --bg-color: #f1d79f;
+            --text-dark: #5d2a16;
+            --border-color: #8a4b9b;
+            --button-bg: #6b2f17;
+            --button-color: #f1d79f;
+            --inner-shadow: #f4c9a0;
+            --page-bg: #6b2f17;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--page-bg);
+            color: var(--text-dark);
+            font-family: 'Cinzel Decorative', serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            text-transform: uppercase; /* Letras em versão maiúscula conforme solicitado */
+        }
+
+        /* Container Principal */
+        .menu-container {
+            width: 100%;
+            max-width: 1000px;
+            border: 4px solid var(--border-color);
+            padding: 40px;
+            position: relative;
+            background-color: var(--bg-color);
+            box-shadow: inset 0 0 0 2px var(--inner-shadow);
+        }
+
+        /* Botão de Voltar */
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 40px;
+            height: 40px;
+            background-color: var(--button-bg);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .back-button::before {
+            content: '<';
+            color: var(--button-color);
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        /* Título Principal */
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .header h1 {
+            font-size: 4rem;
+            letter-spacing: 2px;
+            font-weight: 900;
+        }
+
+        /* Grid de Conteúdo */
+        .menu-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+        }
+
+        /* Seções de Bebidas */
+        .menu-section h2 {
+            font-size: 2.2rem;
+            margin-bottom: 30px;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        /* Item do Menu */
+        .menu-item {
+            margin-bottom: 35px;
+            text-decoration: none; /* Link em todos os produtos */
+            color: var(--text-dark);
+            display: block;
+            transition: transform 0.2s ease;
+        }
+
+        .menu-item:hover {
+            transform: scale(1.02);
+        }
+
+        .item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 10px;
+        }
+
+        .item-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            flex: 1;
+        }
+
+        .item-price {
+            font-family: 'TAN-NIMBUS', serif; /* Fonte para números */
+            font-size: 1.8rem;
+            margin-left: 15px;
+            white-space: nowrap;
+            color: var(--text-dark);
+        }
+
+        .item-description {
+            font-size: 0.75rem;
+            line-height: 1.4;
+            text-transform: none; /* Descrição mantém caixa normal para leitura, mas se o usuário quer 100% igual, a imagem mostra texto normal na descrição */
+            max-width: 90%;
+        }
+
+        .item-description strong {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* Gato Decorativo (Espaço Reservado) */
+        .cat-container {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            width: 150px;
+            height: 150px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-image: url('gatos/gato.difeerente.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+
+        }
+
+        .cat-placeholder {
+            width: 100%;
+            height: 100%;
+            /* O usuário fará upload da imagem, então deixamos o espaço */
+            border: 2px dashed var(--text-dark);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-size: 0.6rem;
+            opacity: 0.5;
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .menu-grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+            .header h1 {
+                font-size: 2.5rem;
+            }
+            .menu-container {
+                padding: 20px;
+            }
+            .cat-container {
+                position: static;
+                margin-top: 20px;
+                margin-left: auto;
+            }
+        }
+
+        /* Ajuste para as letras serem maiúsculas conforme solicitado */
+        .uppercase-text {
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Container Principal do Menu -->
+    <div class="menu-container">
+        
+        <!-- Botão de Voltar -->
+        <div class="back-button">
+            <svg viewBox="0 0 24 24">
+                <path d="M15 18l-6-6 6-6" />
+            </svg>
+        </div>
+
+        <div class="header">
+            <h1></h1>
+        </div>
+
+        <div class="menu-grid">
+            
+            <!-- Coluna de Bebidas Geladas -->
+            <section class="menu-section">
+                <h2>Bebidas geladas</h2>
+
+                <!-- Item 1 -->
+                <a href="#" class="menu-item">
+                    <div class="item-header">
+                        <span class="item-name">Iced Latte de Aveia</span>
+                        <span class="item-price">R$ 15,90</span>
+                    </div>
+                    <div class="item-description">
+                        <strong>Por que não faz mal:</strong> Substitui o leite de vaca por leite de aveia (que tem textura naturalmente cremosa) misturado com café espresso e gelo.
+                    </div>
+                </a>
+
+                <!-- Item 2 -->
+                <a href="#" class="menu-item">
+                    <div class="item-header">
+                        <span class="item-name">Limonada Suíça com Coco</span>
+                        <span class="item-price">R$ 15,00</span>
+                    </div>
+                    <div class="item-description">
+                        <strong>Por que não faz mal:</strong> Em vez do leite condensado tradicional, bate-se o limão com água, gelo e leite de coco concentrado (ou leite condensado de coco), garantindo a cremosidade sem traços de laticínios.
+                    </div>
+                </a>
+
+                <!-- Item 3 -->
+                <a href="#" class="menu-item">
+                    <div class="item-header">
+                        <span class="item-name">Frappé de Morango com Amêndoas</span>
+                        <span class="item-price">R$ 17,90</span>
+                    </div>
+                    <div class="item-description">
+                        <strong>Por que não faz mal:</strong> Feito batendo morangos congelados, leite de amêndoas e um pouco de xarope de açúcar. Não utiliza base de sorvete de leite.
+                    </div>
+                </a>
+            </section>
+
+            <!-- Coluna de Bebidas Quentes -->
+            <section class="menu-section">
+                <h2>Bebidas quentes</h2>
+
+                <!-- Item 4 -->
+                <a href="#" class="menu-item">
+                    <div class="item-header">
+                        <span class="item-name">Cappuccino de Castanhas</span>
+                        <span class="item-price">R$ 12,00</span>
+                    </div>
+                    <div class="item-description">
+                        <strong>Por que não faz mal:</strong> Usa-se leite de castanha-de-caju vaporizado. A castanha-de-caju permite criar uma espuma densa (microespuma) quase idêntica à do leite de vaca, perfeita para a arte do café (latte art).
+                    </div>
+                </a>
+
+                <!-- Item 5 -->
+                <a href="#" class="menu-item">
+                    <div class="item-header">
+                        <span class="item-name">Chocolate Quente Vegano</span>
+                        <span class="item-price">R$ 22,00</span>
+                    </div>
+                    <div class="item-description">
+                        <strong>Por que não faz mal:</strong> Feito com cacau em pó 100% (o achocolatado comum costuma ter soro de leite), leite de aveia, um toque de açúcar e engrossado com uma pitada de amido de milho.
+                    </div>
+                </a>
+
+                <!-- Item 6 -->
+                <a href="#" class="menu-item">
+                    <div class="item-header">
+                        <span class="item-name">Golden Milk (Leite Dourado)</span>
+                        <span class="item-price">R$ 15,00</span>
+                    </div>
+                    <div class="item-description">
+                        <strong>Por que não faz mal:</strong> É uma bebida milenar indiana feita à base de leite de coco quente, cúrcuma, canela, gengibre e uma pitada de pimenta-do-reino. Zero laticínios.
+                    </div>
+                </a>
+            </section>
+        </div>
+
+        <!-- Container para o Gato (Espaço reservado para upload) -->
+        <div class="cat-container">
+            <div class="cat-placeholder">
+                <span></span>
+                <br>
+                <span> alt="um cato com cor de olhos diferentes uma azul e outra amarela"></span>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>
