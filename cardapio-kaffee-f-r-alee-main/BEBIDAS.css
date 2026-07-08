@@ -1,0 +1,151 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+@font-face {
+    font-family: 'TAN-NIMBUS';
+    src: url('fontes/TAN-NIMBUS.woff2') format('woff2'),
+         url('fontes/TAN-NIMBUS.woff') format('woff'),
+         url('fontes/TAN-NIMBUS.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body{
+
+    background:#4b1e08;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    min-height:100vh;
+
+    font-family:Poppins,sans-serif;
+
+}
+
+.pagina{
+
+    width:96%;
+    height:95vh;
+
+    background:#efd39b;
+
+    border:4px solid white;
+
+    outline:2px solid #d9d9d9;
+
+    position:relative;
+
+}
+
+.voltar{
+
+    position:absolute;
+
+    left:20px;
+    top:20px;
+
+}
+
+.voltar a{
+
+    width:70px;
+    height:70px;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    text-decoration:none;
+
+    background:#5b220b;
+
+    color:#f0d398;
+
+    border-radius:50%;
+
+    font-size:60px;
+
+    transition:.3s;
+
+}
+
+.voltar a:hover{
+
+transform:scale(1.08);
+
+}
+
+.conteudo{
+
+    display:flex;
+
+    justify-content:space-around;
+
+    padding-top:70px;
+
+}
+
+.coluna{
+
+    width:42%;
+
+}
+
+h1{
+
+    font-family:'Cinzel Decorative',serif;
+
+    color:#5b220b;
+
+    text-align:center;
+
+    font-size:82px;
+
+    margin-bottom:40px;
+
+    font-weight:700;
+
+}
+
+.item{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:18px;
+
+}
+
+.item span{
+
+    color:#5b220b;
+
+    font-size:33px;
+
+    font-weight:300;
+
+}
+
+.item strong{
+
+    color:#5b220b;
+
+    font-family:'TAN-NIMBUS', serif;
+
+    font-size:46px;
+
+}
+
+.espacamento{
+
+    margin-top:28px;
+
+}
