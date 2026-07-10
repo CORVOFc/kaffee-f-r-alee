@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kaffee Für Alle - Cardápio</title>
+  
+  <!-- Fontes -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;800&family=Quicksand:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ===== CORREÇÃO DA FONTE ===== */
+    @font-face {
+      font-family: 'TAN-NIMBUS';
+      src: url('fontes/TAN-NIMBUS.otf') format('truetype');
+      font-weight: normal;
+      font-style: normal;
+    }
+
+    /* ===== RESET E BASE ===== */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #6b2f17; /* Seu marrom de fundo */
+      font-family: 'Quicksand', sans-serif;
+      padding: 20px;
+    }
+
+    /* ===== CARDÁPIO (DIV MENU) ===== */
+    .pagina-cardapio {
+      width: min(1100px, 96vw);
+      background: #f1d79f; /* Cor creme da imagem */
+      color:#3e241a;
+      border: 8px solid #3d2817; /* Borda grossa marrom */
+      padding: 50px;
+      padding-bottom: 120px; /* Espaço para o gato no rodapé da div */
+      position: relative; /* Necessário para posicionar o gato DENTRO */
+      box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+      overflow: hidden; /* Garante que o gato não saia da div */
+    }
+
+    /* Botão Voltar */
+    .botao-voltar {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      width: 50px;
+      height: 50px;
+      background-color: #3d2817;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      font-size: 28px;
+      color: #f1d79f;
+      transition: transform 0.3s ease;
+      z-index: 20;
+    }
+    
+    .botao-voltar:hover {
+      transform: scale(1.1);
+    }
+
+    .grade-cardapio {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      position: relative;
+      z-index: 5;
+    }
+
+    /* Títulos das Seções */
+    .coluna-cardapio h2 {
+      font-family: 'TAN-NIMBUS', serif;
+      font-size: 38px;
+      color: #3d2817;
+      margin-bottom: 30px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* ITENS DO CARDÁPIO */
+    .produto-cardapio {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      text-decoration: none;
+      color: #3d2817;
+      margin-bottom: 18px;
+      cursor: pointer;
+      transition: 0.2s;
+      padding: 5px 8px;
+      border-radius: 8px;
+    }
+
+    .produto-cardapio:hover {
+      background-color: rgba(61, 40, 23, 0.1);
+      transform: scale(1.02);
+    }
+
+    .produto-cardapio strong {
+      font-family: 'Cinzel', serif;
+      font-size: 22px;
+      text-transform: uppercase;
+      flex: 1;
+    }
+
+    .preco-item {
+      font-family: 'TAN-NIMBUS', serif;
+      font-size: 20px;
+      font-weight: 700;
+      margin-left: 15px;
+    }
+
+    /* INFO EXTRA */
+    .caixa-links {
+      margin-top: 40px;
+      color: #3d2817;
+    }
+
+    .caixa-links a {
+      display: block;
+      margin-bottom: 20px;
+      text-decoration: none;
+      color: inherit;
+      padding: 8px;
+      border-radius: 8px;
+      transition: 0.2s;
+    }
+
+    .caixa-links a:hover {
+      background: rgba(61, 40, 23, 0.08);
+    }
+
+    .caixa-links strong {
+      display: block;
+      font-family: 'Cinzel', serif;
+      font-size: 18px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .refrigerantes {
+      margin-top: 30px;
+    }
+
+    .refrigerantes h3 {
+      font-family: 'Cinzel', serif;
+      font-size: 24px;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+
+    .refrigerantes p {
+      font-family: 'Cinzel', serif;
+      font-weight: 800;
+      cursor: pointer;
+      margin-top: 8px;
+      font-size: 18px;
+    }
+
+    /* GATINHO (DENTRO DA DIV MENU) */
+    .gato-decor {
+      position: absolute;
+      bottom: 20px; /* Fica no fundo da div */
+      right: 20px;  /* Fica no canto direito da div */
+      width: 130px; /* Tamanho ajustado */
+      height: auto;
+      z-index: 10;
+      pointer-events: none;
+    }
+
+    /* 
+       ============================================
+       MODAL (ABA FLUTUANTE)
+       ============================================ 
+    */
+    .sobreposicao-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.85);
+      z-index: 999;
+      opacity: 0;
+      visibility: hidden;
+      transition: 0.3s;
+      backdrop-filter: blur(8px);
+    }
+
+    .sobreposicao-modal.ativo {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .caixa-modal {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0.8);
+      background-color: #f1d79f;
+      border-radius: 25px;
+      box-shadow: 0 30px 60px rgba(0,0,0,0.6);
+      z-index: 1000;
+      max-width: 480px;
+      width: 90%;
+      overflow: hidden;
+      opacity: 0;
+      visibility: hidden;
+      transition: 0.3s;
+      border: 6px solid #3d2817;
+    }
+
+    .caixa-modal.ativo {
+      opacity: 1;
+      visibility: visible;
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    .botao-fechar-modal {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background: #3d2817;
+      color: #f1d79f;
+      border: none;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      font-size: 24px;
+      cursor: pointer;
+      z-index: 10;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .container-img-modal {
+      width: 100%;
+      height: 280px;
+    }
+
+    .container-img-modal img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .info-modal {
+      padding: 30px;
+      text-align: center;
+      color: #3d2817;
+    }
+
+    .info-modal h2 {
+      font-family: 'Cinzel', serif;
+      font-size: 28px;
+      margin-bottom: 12px;
+      font-weight: 700;
+    }
+
+    .info-modal p {
+      font-size: 16px;
+      margin-bottom: 25px;
+      line-height: 1.5;
+    }
+
+    .preco-modal {
+      font-family: 'TAN-NIMBUS', serif;
+      font-size: 26px;
+      font-weight: 800;
+      margin-bottom: 25px;
+      display: block;
+    }
+
+    .botao-adicionar {
+      background-color: #3d2817;
+      color: #f1d79f;
+      border: none;
+      padding: 14px 40px;
+      border-radius: 12px;
+      font-family: 'Cinzel', serif;
+      font-weight: 800;
+      cursor: pointer;
+      font-size: 18px;
+      transition: 0.2s;
+    }
+
+    .botao-adicionar:hover {
+      background-color: #5d2a16;
+      transform: translateY(-3px);
+    }
+
+    /* RESPONSIVIDADE */
+    @media (max-width: 900px) {
+      .grade-cardapio { grid-template-columns: 1fr; }
+      .pagina-cardapio { padding: 30px; padding-bottom: 100px; }
+      .gato-decor { width: 90px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- CARDÁPIO (DIV MENU) -->
+  <div class="pagina-cardapio">
+    <div class="botao-voltar" onclick="window.location.href='cardapio.central.html'">&lt;</div>
+    
+    <div class="grade-cardapio">
+      
+      <!-- COLUNA 1 -->
+      <div class="coluna-cardapio">
+        <h2>Bebidas Quentes</h2>
+        <div class="produto-cardapio" data-nome="Espresso" data-preco="8,00" data-desc="Café puro, intenso e extraído sob pressão." data-img="https://images.unsplash.com/photo-1559056199-641a0ac8b3f4?w=500">
+          <strong>Espresso</strong>
+          <span class="preco-item">R$ 8,00</span>
+        </div>
+        <div class="produto-cardapio" data-nome="Cappuccino" data-preco="12,00" data-desc="Espresso cremoso com leite vaporizado e canela." data-img="https://images.unsplash.com/photo-1578432291840-8d1c51dc1cff?w=500">
+          <strong>Cappuccino</strong>
+          <span class="preco-item">R$ 12,00</span>
+        </div>
+        <div class="produto-cardapio" data-nome="Latte" data-preco="14,00" data-desc="Café suave com muito leite vaporizado." data-img="https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=500">
+          <strong>Latte</strong>
+          <span class="preco-item">R$ 14,00</span>
+        </div>
+        <div class="produto-cardapio" data-nome="Mocha" data-preco="15,00" data-desc="Café com leite e calda de chocolate belga." data-img="https://images.unsplash.com/photo-1578432291840-8d1c51dc1cff?w=500">
+          <strong>Mocha</strong>
+          <span class="preco-item">R$ 15,00</span>
+        </div>
+        <div class="produto-cardapio" data-nome="Chocolate Quente" data-preco="13,00" data-desc="Chocolate derretido com leite cremoso." data-img="https://images.unsplash.com/photo-1578432291840-8d1c51dc1cff?w=500">
+          <strong>Chocolate Quente</strong>
+          <span class="preco-item">R$ 13,00</span>
+        </div>
+        <div class="produto-cardapio" data-nome="Café Coado" data-preco="5,00" data-desc="Café tradicional feito no filtro de papel." data-img="https://images.unsplash.com/photo-1559056199-641a0ac8b3f4?w=500">
+          <strong>Café Coado</strong>
+          <span class="preco-item">R$ 5,00</span>
+        </div>
+
+        <h2 style="margin-top: 40px;">Bebidas Frias</h2>
+        <div class="produto-cardapio" data-nome="Chá Gelado de Limão" data-preco="10,00" data-desc="Chá refrescante com limão siciliano." data-img="https://images.unsplash.com/photo-1599599810694-b5ac4dd64b73?w=500">
+          <strong>Chá Gelado de Limão</strong>
+          <span class="preco-item">R$ 10,00</span>
+        </div>
+        <div class="produto-cardapio" data-nome="Limonada Suíça" data-preco="10,00" data-desc="Limonada batida com leite condensado." data-img="https://images.unsplash.com/photo-1599599810694-b5ac4dd64b73?w=500">
+          <strong>Limonada Suíça</strong>
+          <span class="preco-item">R$ 10,00</span>
+        </div>
+        <div class="produto-cardapio" data-nome="Soda Italiana" data-preco="10,00" data-desc="Água gaseificada com xarope de frutas." data-img="https://images.unsplash.com/photo-1599599810694-b5ac4dd64b73?w=500">
+          <strong>Soda Italiana</strong>
+          <span class="preco-item">R$ 10,00</span>
+        </div>
+        <div class="produto-cardapio" data-nome="Água com Alecrim" data-preco="10,00" data-desc="Água com gás, gelo e alecrim fresco." data-img="https://images.unsplash.com/photo-1599599810694-b5ac4dd64b73?w=500">
+          <strong>Água com Gás e Alecrim</strong>
+          <span class="preco-item">R$ 10,00</span>
+        </div>
+      </div>
+
+      <!-- COLUNA 2 -->
+      <div class="coluna-cardapio">
+        <h2>Especiais</h2>
+        <div class="produto-cardapio" data-nome="Frappé de Café" data-preco="16,00" data-desc="Café gelado batido com sorvete de creme." data-img="https://images.unsplash.com/photo-1599599810694-b5ac4dd64b73?w=500">
+          <strong>Frappé de Café</strong>
+          <span class="preco-item">R$ 16,00</span>
+        </div>
+        <div class="produto-cardapio" data-nome="Latte Macchiato" data-preco="16,00" data-desc="Leite vaporizado manchado com espresso." data-img="https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=500">
+          <strong>Latte Macchiato</strong>
+          <span class="preco-item">R$ 16,00</span>
+        </div>
+        <div class="produto-cardapio" data-nome="Negroni" data-preco="13,50" data-desc="Coquetel clássico com infusão de café." data-img="https://images.unsplash.com/photo-1578432291840-8d1c51dc1cff?w=500">
+          <strong>Negroni</strong>
+          <span class="preco-item">R$ 13,50</span>
+        </div>
+        <div class="produto-cardapio" data-nome="Pingado" data-preco="15,00" data-desc="O clássico café com leite brasileiro." data-img="https://images.unsplash.com/photo-1559056199-641a0ac8b3f4?w=500">
+          <strong>Pingado</strong>
+          <span class="preco-item">R$ 15,00</span>
+        </div>
+        <div class="produto-cardapio" data-nome="White Russian" data-preco="13,00" data-desc="Drink cremoso de café, vodka e creme." data-img="https://images.unsplash.com/photo-1578432291840-8d1c51dc1cff?w=500">
+          <strong>White Russian</strong>
+          <span class="preco-item">R$ 13,00</span>
+        </div>
+
+        <div class="caixa-links">
+          <a href="intolerancia-lactose.html">
+            <strong>Clique aqui</strong>
+            <span>Intolerante a lactose</span>
+          </a>
+          <a href="intolerancia-frutose.html">
+            <strong>Clique aqui</strong>
+            <span>Intolerância a Frutose e Sensibilidade aos FODMAPs</span>
+          </a>
+          <a href="intolerancia-cafeina.html">
+            <strong>Clique aqui</strong>
+            <span>Intolerância / Sensibilidade à Cafeína</span>
+          </a>
+        </div>
+
+        <div class="refrigerantes">
+          <a href="refrigerantes.html" style="text-decoration: none; color: inherit;">
+            <h3>Refrigerantes</h3>
+            <p>CLIQUE AQUI</p>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- GATINHO (DENTRO DA DIV MENU) -->
+    <img src="gatos/GATO.CANECA.png" class="gato-decor" alt="Gato">
+  </div>
+
+  <!-- MODAL (ABA FLUTUANTE) -->
+  <div class="sobreposicao-modal" id="modalOverlay"></div>
+  <div class="caixa-modal" id="produtoModal">
+    <button class="botao-fechar-modal" id="btnFecharModal">&times;</button>
+    <div class="container-img-modal">
+      <img id="modalImg" src="" alt="Produto">
+    </div>
+    <div class="info-modal">
+      <h2 id="modalNome"></h2>
+      <p id="modalDesc"></p>
+      <span class="preco-modal" id="modalPreco"></span>
+      <button class="botao-adicionar" id="btnAdd">ADICIONAR AO CARRINHO</button>
+    </div>
+  </div>
+
+  <script>
+    const modal = document.getElementById('produtoModal');
+    const overlay = document.getElementById('modalOverlay');
+    const btnFechar = document.getElementById('btnFecharModal');
+    const itens = document.querySelectorAll('.produto-cardapio');
+
+    const mNome = document.getElementById('modalNome');
+    const mDesc = document.getElementById('modalDesc');
+    const mPreco = document.getElementById('modalPreco');
+    const mImg = document.getElementById('modalImg');
+
+    itens.forEach(item => {
+      item.addEventListener('click', () => {
+        mNome.textContent = item.getAttribute('data-nome');
+        mDesc.textContent = item.getAttribute('data-desc');
+        mPreco.textContent = `R$ ${item.getAttribute('data-preco')}`;
+        mImg.src = item.getAttribute('data-img');
+        modal.classList.add('ativo');
+        overlay.classList.add('ativo');
+      });
+    });
+
+    function fechar() {
+      modal.classList.remove('ativo');
+      overlay.classList.remove('ativo');
+    }
+
+    btnFechar.addEventListener('click', fechar);
+    overlay.addEventListener('click', fechar);
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') fechar(); });
+    document.getElementById('btnAdd').addEventListener('click', () => {
+      alert('Produto adicionado ao carrinho!');
+      fechar();
+    });
+  </script>
+</body>
+</html>

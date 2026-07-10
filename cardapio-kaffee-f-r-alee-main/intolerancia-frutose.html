@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kaffee Für Alle - Intolerância à Frutose</title>
+
+    <!-- Fontes principais da identidade visual -->
+    <!-- Cinzel para títulos, Quicksand para textos gerais -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Quicksand:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <!-- Fonte decorativa TAN-NIMBUS para títulos especiais / preços -->
+    <style>
+        /* ===== Fonte personalizada TAN-NIMBUS ===== */
+        @font-face {
+            font-family: 'TAN-NIMBUS';
+            src: url('fontes/TAN-NIMBUS.otf') format('opentype');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        /* ===== RESET BÁSICO =====
+           Remove margens e padding padrão, usa box-sizing para facilitar layout */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* ===== ESTILO GERAL DO BODY =====
+           Fundo marrom, conteúdo centralizado, fonte de texto principal */
+        body {
+            min-height: 100vh;
+            display: flex;             /* centralização horizontal/vertical */
+            justify-content: center;
+            align-items: center;
+            background: #6b2f17;       /* marrom de fundo */
+            font-family: 'Quicksand', sans-serif;
+            padding: 20px;
+        }
+
+        /* ===== QUADRO DO CARDÁPIO =====
+           Esta classe será usada em todas as páginas de cardápio (normal e especiais) */
+        .pagina-cardapio {
+            width: min(1100px, 96vw);  /* limita largura, mas responsivo */
+            background: #f1d79f;       /* bege “papel de menu” */
+            border: 8px solid #3d2817; /* borda escura retro */
+            padding: 50px;
+            padding-bottom: 150px;     /* espaço para o gato decorativo */
+            position: relative;
+            box-shadow: 0 10px 40px rgba(0,0,0,.4);
+        }
+
+        /* ===== BOTÃO VOLTAR =====
+           Círculo no canto superior esquerdo, igual ao cardápio normal */
+        .botao-voltar {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 60px;
+            height: 60px;
+            background-color: #4A2C2A;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            font-size: 32px;
+            color: #EED9B7;
+            transition: transform 0.3s ease;
+            font-family: 'Cinzel', serif;
+            font-weight: 700;
+            text-decoration: none;     /* remove sublinhado do link */
+        }
+
+        .botao-voltar:hover {
+            transform: scale(1.1);
+        }
+
+        /* ===== CABEÇALHO DO CARDÁPIO ESPECIAL =====
+           Título grande explicando que é um menu para intolerância à frutose */
+        .cabecalho {
+            text-align: center;
+            margin-bottom: 40px;
+            margin-top: 10px;
+        }
+
+        .cabecalho h1 {
+            font-size: 40px;
+            color: #4A2C2A;
+            font-weight: 700;
+            letter-spacing: 2px;
+            line-height: 1.4;
+            text-transform: uppercase;
+            font-family: 'Cinzel', serif;
+        }
+
+        .cabecalho p {
+            margin-top: 10px;
+            font-size: 15px;
+            color: #3A1A1A;
+            font-family: 'Quicksand', sans-serif;
+        }
+
+        /* ===== GRID DE DUAS COLUNAS =====
+           Mesmo conceito do cardápio normal: duas colunas lado a lado */
+        .grade-cardapio {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+        }
+
+        /* Cada coluna agrupa uma categoria (quentes / geladas, etc.) */
+        .coluna-cardapio h2 {
+            font-family: 'TAN-NIMBUS', serif;
+            font-size: 32px;
+            color: #3d2817;
+            margin-bottom: 25px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .coluna-cardapio {
+            position: relative;
+        }
+
+        /* ===== ITEM DE CARDÁPIO PADRÃO =====
+           Visual igual ao cardápio normal: linha com nome e preço */
+        .produto-cardapio {
+            display: flex;                /* nome e preço na mesma linha */
+            justify-content: space-between;
+            align-items: baseline;
+            text-decoration: none;
+            color: #3d2817;
+            margin-bottom: 10px;
+            cursor: pointer;              /* indica que é clicável */
+            transition: 0.2s;
+            padding: 6px 8px;
+            border-radius: 8px;
+        }
+
+        .produto-cardapio:hover {
+            background-color: rgba(61, 40, 23, 0.1);
+            transform: scale(1.02);
+        }
+
+        /* Nome do produto: fonte Cinzel, destaque */
+        .produto-cardapio strong {
+            font-family: 'Cinzel', serif;
+            font-size: 20px;
+            text-transform: uppercase;
+            flex: 1;                      /* ocupa o espaço da esquerda */
+        }
+
+        /* Preço: fonte TAN-NIMBUS, mais decorativa */
+        .preco-item {
+            font-family: 'TAN-NIMBUS', serif;
+            font-size: 20px;
+            font-weight: 700;
+            margin-left: 15px;
+            white-space: nowrap;          /* evita quebra de linha do preço */
+        }
+
+        /* ===== VARIAÇÃO PARA PÁGINA DE FRUTOSE =====
+           Aqui permitimos uma descrição visível “Por que não faz mal” opcional */
+        .produto-frutose {
+            display: flex;
+            flex-direction: column;       /* empilha cabeçalho + descrição */
+            align-items: stretch;
+            margin-bottom: 18px;
+        }
+
+        .produto-frutose-cabecalho {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+        }
+
+        .descricao-item {
+            font-size: 12px;
+            color: #3A1A1A;
+            line-height: 1.6;
+            margin-top: 4px;
+            font-family: 'Cinzel', serif;
+        }
+
+        /* ===== GATO DECORATIVO ===== */
+        .gato-decor {
+            position: absolute;
+            right: 116px;
+            bottom: -276px;
+            width: 158px;
+            height: auto;
+            z-index: 10;
+        }
+
+        /* ===== MODAL (ABA FLUTUANTE) COMPARTILHADA =====
+           Este componente será reaproveitado em todas as páginas de cardápio */
+        .sobreposicao-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85);
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transition: 0.3s;
+            backdrop-filter: blur(8px);
+        }
+
+        .sobreposicao-modal.ativo {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .caixa-modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.8);
+            background-color: #f1d79f;
+            border-radius: 25px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.6);
+            z-index: 1000;
+            max-width: 480px;
+            width: 90%;
+            overflow: hidden;
+            opacity: 0;
+            visibility: hidden;
+            transition: 0.3s;
+            border: 6px solid #3d2817;
+        }
+
+        .caixa-modal.ativo {
+            opacity: 1;
+            visibility: visible;
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .botao-fechar-modal {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #3d2817;
+            color: #f1d79f;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 24px;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container-img-modal {
+            width: 100%;
+            height: 220px;
+        }
+
+        .container-img-modal img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .info-modal {
+            padding: 30px;
+            text-align: center;
+            color: #3d2817;
+        }
+
+        .info-modal h2 {
+            font-family: 'Cinzel', serif;
+            font-size: 26px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .info-modal p {
+            font-size: 15px;
+            margin-bottom: 20px;
+            line-height: 1.5;
+            font-family: 'Quicksand', sans-serif;
+        }
+
+        .preco-modal {
+            font-family: 'Cinzel', serif;
+            font-size: 24px;
+            font-weight: 800;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .botao-adicionar {
+            background-color: #3d2817;
+            color: #f1d79f;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 12px;
+            font-family: 'Cinzel', serif;
+            font-weight: 800;
+            cursor: pointer;
+            font-size: 16px;
+            transition: 0.2s;
+        }
+
+        .botao-adicionar:hover {
+            background-color: #5d2a16;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        /* ===== RESPONSIVIDADE ===== */
+        @media (max-width: 900px) {
+            .grade-cardapio { 
+                grid-template-columns: 1fr; /* vira uma coluna no mobile */
+                gap: 40px;
+            }
+            .pagina-cardapio { 
+                padding: 30px; 
+            }
+            .cabecalho h1 {
+                font-size: 28px;
+            }
+       }
+        /* GATINHO */
+    .gato-decor{
+        position: absolute;
+        right: 116px;
+        bottom: -276px;
+        width: 158px;
+        height: auto;
+        z-index: 10;
+    }
+    </style>
+</head>
+<body>
+
+    <!-- QUADRO PRINCIPAL DO CARDÁPIO -->
+    <div class="pagina-cardapio">
+
+        <!-- Botão voltar, igual ao cardápio normal, mas apontando para a página adequada -->
+        <a href="cardapio.normal.bebidas.html" class="botao-voltar" aria-label="Voltar ao cardápio de bebidas">&lt;</a>
+
+        <!-- Cabeçalho explicando que esta página é um cardápio especial -->
+        <div class="cabecalho">
+            <h1>Intolerância à Frutose<br>e Sensibilidade aos FODMAPs</h1>
+            <p>Opções pensadas para reduzir desconfortos e evitar bebidas ricas em frutose.</p>
+        </div>
+
+        <!-- GRID de duas colunas para organizar as categorias de bebidas -->
+        <div class="grade-cardapio">
+
+            <!-- COLUNA 1: Bebidas geladas -->
+            <div class="coluna-cardapio">
+                <h2>Bebidas Geladas</h2>
+
+                <!-- Cada item usa .produto-cardapio e tem data-* para o modal.
+                     Aqui usamos também a variação .produto-frutose para mostrar a descrição logo abaixo. -->
+                <div class="produto-cardapio produto-frutose"
+                     data-nome="Água Saborizada de Pepino e Alecrim"
+                     data-preco="10,10"
+                     data-desc="Por que não faz mal: Não contém suco de frutas. O pepino e o alecrim liberam apenas óleos essenciais e aroma na água, com praticamente zero frutose."
+                     data-img="https://images.unsplash.com/photo-1599599810694-b5ac4dd64b73?w=500">
+                    <div class="produto-frutose-cabecalho">
+                        <strong>Água Saborizada de Pepino e Alecrim</strong>
+                        <span class="preco-item">R$ 10,10</span>
+                    </div>
+                    <p class="descricao-item">
+                        Por que não faz mal: Não contém suco de frutas; apenas infusão suave de pepino e alecrim na água.
+                    </p>
+                </div>
+
+                <div class="produto-cardapio produto-frutose"
+                     data-nome="Chá Gelado de Hortelã com Limão Taiti"
+                     data-preco="12,00"
+                     data-desc="Por que não faz mal: Hortelã é livre de frutose. Limão Taiti é considerado de baixo FODMAP quando usado em poucas gotas. Servido sem açúcar ou com estévia pura."
+                     data-img="https://images.unsplash.com/photo-1559056199-641a0ac8b3f4?w=500">
+                    <div class="produto-frutose-cabecalho">
+                        <strong>Chá Gelado de Hortelã com Limão Taiti</strong>
+                        <span class="preco-item">R$ 12,00</span>
+                    </div>
+                    <p class="descricao-item">
+                        Por que não faz mal: Infusão de hortelã com poucas gotas de limão Taiti; sem suco concentrado de fruta.
+                    </p>
+                </div>
+
+                <div class="produto-cardapio produto-frutose"
+                     data-nome="Cold Brew (Café Extraído a Frio)"
+                     data-preco="17,90"
+                     data-desc="Por que não faz mal: Café puro, sem frutose e sem carboidratos fermentáveis. Pode ser servido com gelo e um toque de leite, se o cliente tolerar lactose."
+                     data-img="https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=500">
+                    <div class="produto-frutose-cabecalho">
+                        <strong>Cold Brew (Café Extraído a Frio)</strong>
+                        <span class="preco-item">R$ 17,90</span>
+                    </div>
+                    <p class="descricao-item">
+                        Por que não faz mal: Café puro, naturalmente livre de frutose.
+                    </p>
+                </div>
+            </div>
+
+            <!-- COLUNA 2: Bebidas quentes -->
+            <div class="coluna-cardapio">
+                <h2>Bebidas Quentes</h2>
+
+                <div class="produto-cardapio produto-frutose"
+                     data-nome="Chá de Camomila ou Gengibre"
+                     data-preco="9,50"
+                     data-desc="Por que não faz mal: São infusões de ervas e raízes, sem o açúcar das frutas. Evitamos chás de maçã ou frutas vermelhas."
+                     data-img="https://images.unsplash.com/photo-1578432291840-8d1c51dc1cff?w=500">
+                    <div class="produto-frutose-cabecalho">
+                        <strong>Chá de Camomila ou Gengibre</strong>
+                        <span class="preco-item">R$ 9,50</span>
+                    </div>
+                    <p class="descricao-item">
+                        Por que não faz mal: Infusões de ervas e raízes, livres do açúcar de frutas.
+                    </p>
+                </div>
+
+                <div class="produto-cardapio produto-frutose"
+                     data-nome="Café Coado Tradicional"
+                     data-preco="12,30"
+                     data-desc="Por que não faz mal: Grãos de café torrado não possuem frutose. Pode ser consumido puro ou com leite, se o cliente não for intolerante à lactose."
+                     data-img="https://images.unsplash.com/photo-1559056199-641a0ac8b3f4?w=500">
+                    <div class="produto-frutose-cabecalho">
+                        <strong>Café Coado Tradicional</strong>
+                        <span class="preco-item">R$ 12,30</span>
+                    </div>
+                    <p class="descricao-item">
+                        Por que não faz mal: Café filtrado, sem frutose; opção clássica e segura.
+                    </p>
+                </div>
+
+                <div class="produto-cardapio produto-frutose"
+                     data-nome="Leite Quente com Essência de Baunilha"
+                     data-preco="15,00"
+                     data-desc="Por que não faz mal: Bebida à base de leite com essência de baunilha sem adição de sucos ou xaropes de fruta. Ajustamos adoçantes conforme necessidade."
+                     data-img="https://images.unsplash.com/photo-1599599810694-b5ac4dd64b73?w=500">
+                    <div class="produto-frutose-cabecalho">
+                        <strong>Leite Quente com Essência de Baunilha</strong>
+                        <span class="preco-item">R$ 15,00</span>
+                    </div>
+                    <p class="descricao-item">
+                        Por que não faz mal: Feito com leite e essência de baunilha, sem sucos de frutas.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Gato decorativo opcional -->
+        <img src="gatos/gato.difeerente.png" class="gato-decor" alt="Gato decorativo">
+
+    </div>
+
+    <!-- MODAL COMPARTILHADO (igual ao do cardápio normal) -->
+    <div class="sobreposicao-modal" id="sobreposicaoModal"></div>
+    <div class="caixa-modal" id="produtoModal">
+        <button class="botao-fechar-modal" id="botaoFecharModal">&times;</button>
+
+        <div class="container-img-modal">
+            <img id="imagemModal" src="" alt="Produto">
+        </div>
+
+        <div class="info-modal">
+            <h2 id="nomeModal"></h2>
+            <p id="descricaoModal"></p>
+            <span class="preco-modal" id="precoModal"></span>
+            <button class="botao-adicionar" id="botaoAdicionar">ADICIONAR AO CARRINHO</button>
+        </div>
+    </div>
+        <!-- GATINHO DECORATIVO -->
+     <img src="gatos/gato.difeerente.png" class="gato-decor" alt="Gato">
+    </div>
+
+    <script>
+        // ===== SELEÇÃO DE ELEMENTOS DA MODAL =====
+        const modal = document.getElementById('produtoModal');
+        const sobreposicao = document.getElementById('sobreposicaoModal');
+        const botaoFechar = document.getElementById('botaoFecharModal');
+        const itens = document.querySelectorAll('.produto-cardapio');
+
+        const nomeModal = document.getElementById('nomeModal');
+        const descricaoModal = document.getElementById('descricaoModal');
+        const precoModal = document.getElementById('precoModal');
+        const imagemModal = document.getElementById('imagemModal');
+
+        // ===== FUNÇÃO PARA ABRIR MODAL =====
+        itens.forEach(item => {
+            item.addEventListener('click', () => {
+                // Pega os atributos data-* do item clicado
+                const nome = item.getAttribute('data-nome');
+                const preco = item.getAttribute('data-preco');
+                const desc = item.getAttribute('data-desc');
+                const img = item.getAttribute('data-img');
+
+                // Preenche o conteúdo da modal
+                nomeModal.textContent = nome;
+                descricaoModal.textContent = desc;
+                precoModal.textContent = `R$ ${preco}`;
+                imagemModal.src = img;
+
+                // Ativa classes que mostram a modal e o fundo escuro
+                modal.classList.add('ativo');
+                sobreposicao.classList.add('ativo');
+            });
+        });
+
+        // ===== FUNÇÃO PARA FECHAR MODAL =====
+        function fecharModal() {
+            modal.classList.remove('ativo');
+            sobreposicao.classList.remove('ativo');
+        }
+
+        botaoFechar.addEventListener('click', fecharModal);
+        sobreposicao.addEventListener('click', fecharModal);
+
+        // Fecha com ESC
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') fecharModal();
+        });
+
+        // Botão "Adicionar ao carrinho"
+        const botaoAdicionar = document.getElementById('botaoAdicionar');
+        botaoAdicionar.addEventListener('click', () => {
+            alert('Produto adicionado ao carrinho!');
+            fecharModal();
+        });
+    </script>
+</body>
+</html>
